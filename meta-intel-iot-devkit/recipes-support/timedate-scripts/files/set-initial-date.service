@@ -7,4 +7,4 @@ Type=oneshot
 ExecStart=/usr/sbin/set-initial-date
 
 [Install]
-WantedBy=local-fs.target
+WantedBy=multi-user.target
