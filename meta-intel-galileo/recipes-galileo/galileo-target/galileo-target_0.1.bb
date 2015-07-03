@@ -8,7 +8,8 @@ SRC_URI = "file://galileo-target.tar.bz2 \
            file://galileo_target_1.0.1_upgrade.patch \
            file://usb_improv_patch-1.patch \
            file://autodetect_pins_galileo.patch \
-           file://galileo-sketch-reset.service"
+           file://galileo-sketch-reset.service \
+	   file://r1_2_sketch_reset.patch"
 
 INSTALLDIR = "/opt/cln/galileo"
 FILES_${PN} += "${INSTALLDIR} \
