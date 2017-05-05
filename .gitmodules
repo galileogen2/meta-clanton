@@ -1,3 +1,32 @@
 [submodule "repo-ext/linux-ltsi"]
-	path = repo-ext/linux-ltsi
-	url = http://git.linuxfoundation.org/ltsi-kernel.git
+        path = repo-ext/linux-ltsi
+        url = http://git.linuxfoundation.org/ltsi-kernel.git
+
+[submodule "repo-ext/linux-stable"]
+        path = repo-ext/linux-stable
+        url = git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+
+[submodule "repo-ext/meta-intel-galileo"]
+        path = repo-ext/meta-intel-galileo
+        url = git://git.yoctoproject.org/meta-intel-galileo
+
+[submodule "repo-ext/meta-intel-iot-devkit"]
+        path = repo-ext/meta-intel-iot-devkit
+        url = git://git.yoctoproject.org/meta-intel-iot-devkit
+
+[submodule "repo-ext/meta-intel-iot-middleware"]
+        path = repo-ext/meta-intel-iot-middleware
+        url = git://git.yoctoproject.org/meta-intel-iot-middleware
+
+[submodule "repo-ext/meta-intel-quark"]
+        path = repo-ext/meta-intel-quark
+        url = git://git.yoctoproject.org/meta-intel-quark
+
+[submodule "repo-ext/meta-openembedded"]
+        path = repo-ext/meta-openembedded
+        url = git://git.openembedded.org/meta-openembedded
+
+[submodule "repo-ext/poky"]
+        path = repo-ext/poky
+        url = git://git.yoctoproject.org/poky
+
