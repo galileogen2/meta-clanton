@@ -1,0 +1,3 @@
+[submodule "repo-ext/linux-ltsi"]
+	path = repo-ext/linux-ltsi
+	url = http://git.linuxfoundation.org/ltsi-kernel.git
