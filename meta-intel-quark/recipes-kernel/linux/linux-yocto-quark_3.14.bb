@@ -4,7 +4,7 @@ require recipes-kernel/linux/linux-yocto.inc
 # Override SRC_URI in a bbappend file to point at a different source
 # tree if you do not want to build from Linus' tree.
 
-SRC_URI = "git://LINUX_YOCTO_REPO;protocol=file;bareclone=1;branch=LINUX_YOCTO_BRANCH"
+SRC_URI = "git:///build/clanton_v1/repo-ext/linux-stable;protocol=file;bareclone=1;branch=3.14.28-ltsi"
 
 SRC_URI += "file://quark_3.14.cfg"
 SRC_URI += "file://quark-standard_3.14.scc"
