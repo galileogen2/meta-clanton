@@ -1,0 +1,9 @@
+Default targets are:
+    image-fast
+
+Note: Please make sure local.conf is setup as follow:
+
+For image-fast:
+    DISTRO = "quark-fast"
+
+Note: The output is at build/tmp-fast/deploy/images/quark
