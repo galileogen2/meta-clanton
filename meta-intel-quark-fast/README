@@ -1,0 +1,107 @@
+
+README: Intel Quark X1000 r1.2.1 Fastboot
+-----------------------------------------
+
+The intended audience for this document are software engineers who are
+already familiar with Intel Quark SoC X1000 BSP build.
+
+Please see the Intel Quark BSP build guide for information on Intel Quark
+SoC X1000 BSP build.
+
+The fast boot meta layer inherits iot-devkit-spi meta layer design with
+customizations to the bootable partition, package selection
+and kernel configuration. The fast boot solution uses the OpenEmbedded
+Image Creator tool wic to create the partitioned boot disk, to enable
+a direct boot from SD/eMMC.
+
+NOTE:
+-----
+1. The fast boot target for non-secure X1000 platforms only.
+2. The fast boot does not provide support for all quark iot-devkit/makers
+   specific services.
+3. The fast boot target glibc instead uclibc
+4. The fast boot target enables all the auto-load driver modules during Linux
+   boot time as configured in the flash image-spi build.
+
+INDEX:
+-----
+|-- COPYING.MIT
+|-- README			<--- This document.
+|-- conf
+|   |-- bblayers.conf.sample	<--- An example of bblayer.conf in build/conf
+|   |-- conf-notes.txt
+|   |-- distro
+|   |   `-- quark-fast.conf	<--- distro layer configuration
+|   |-- layer.conf		<--- fast boot bitbake layer configuration
+|   `-- local.conf.sample	<--- An example of local.conf in build/conf
+|-- mkefidisk.wks		<--- EFI disk boot-able partition
+|					configuration kickstart file
+|-- recipes-core
+|   |-- busybox
+|   |   |-- busybox
+|   |   |   `-- quark-fast
+|   |   |       `-- defconfig	<--- busybox configuration file
+|   |   `-- busybox_%.bbappend
+|   |-- images
+|   |   |-- core-image-minimal-initramfs.bbappend
+|   |   `-- image-fast.bb	<--- fast boot rootfs configuration
+|   |-- init-ifupdown
+|   `-- initscripts
+|
+`-- recipes-kernel
+    `-- linux
+	|-- linux-yocto-quark
+	|   |-- README
+	|   `-- quark-fast	<--- kernel configuration fragments for fastboot
+	`-- linux-yocto-quark_3.14.bbappend	<--- Modify this file for the
+				customization of auto-load kernel modules
+
+
+Yocto BSP build guide:
+----------------------
+1. Extract meta-clanton_v1.2.1.tar.gz
+
+	# tar vxf meta-clanton_v1.2.1.tar.gz
+
+2. run setup.sh
+
+	# ./setup.sh
+
+3. setup bitbake build environment
+
+	# source ./oe-init-build-env <build directory>
+
+4. Make sure "meta-intel-quark-fast" is included in BBLAYERS settings in
+   conf/bblayer.conf as the example showed in
+   "meta-intel-quark-fast/conf/bblayer.conf.sample". e.g.
+
+	BBLAYERS ?= " \
+	     ....
+	     ${BBPATH}/../meta-intel-iot-devkit \
+	     ${BBPATH}/../meta-intel-quark-fast \
+	     ....
+
+5. Set DISTRO to "quark-fast" in build/local.conf as the example in
+   "meta-intel-quark-fast/conf/local.conf.sample". e.g.
+
+	#DISTRO ?= "iot-devkit-multilibc"
+	DISTRO ?= "quark-fast"
+
+6. Run bitbake image-fast for fast-boot yocto build, the built output images
+   will be available in <build directory>/tmp-fast/deploy/images/quark/
+
+	# bitbake image-fast
+
+7. Create a bootable partition image using wic (execute in "build directory"),
+   wic (Openembedded Image Creator) is available in the "scripts" directory
+
+	# wic create ../meta-intel-quark-fast/mkefidisk.wks \
+		-e image-fast -o ./fast_boot_image
+
+8. Create fast boot image on SD card or eMMC
+
+	# cd ./fast_boot_image/build
+	# sudo dd if=mkefidisk-<date-time>-mmcblk0.direct of=/dev/mmcblk0; sync
+
+Tip. Always run "sync" after "dd" command to make sure the operating systems
+     file cache is flushed to SD card/eMMC.

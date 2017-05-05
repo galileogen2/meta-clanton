@@ -1,0 +1,6 @@
+This folder contains Linux kernel configs that are selected/commented when
+a specific DISTRO choice is selected in build/local.conf. The list of DISTRO
+supported is (as the name of sub-folder suggests):
+ - quark-fast
+
+The default Linux kernel configs chosen (per DISTRO) are vastly different.
